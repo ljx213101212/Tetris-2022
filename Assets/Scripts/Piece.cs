@@ -56,19 +56,12 @@ public class Piece : MonoBehaviour
         newPosition.x += translation.x;
         newPosition.y += translation.y;
 
-        bool isNextMoveValid = isPositionValid(newPosition);
+        bool isNextMoveValid = board.isPositionValid(this, newPosition);
+
+        Debug.Log("Moving: " + isNextMoveValid);
         if (isNextMoveValid)
         {
             position = newPosition;
         }
-    }
-
-    //The position is only valid if every cell is valid
-    public bool isPositionValid(Vector3Int newPosition)
-    {
-        //TODO
-        //1. An out of bounds tile is invalid
-        //2. A tile already occupies the position, thus invalid
-        return true;
     }
 }

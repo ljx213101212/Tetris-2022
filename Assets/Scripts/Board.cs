@@ -10,13 +10,14 @@ public class Board : MonoBehaviour
     public Vector2Int boardSize = new Vector2Int(10, 20);
     public Vector3Int spawnPosition = new Vector3Int(-1, 8, 0);
 
-    // public RectInt Bounds {
-    //     get
-    //     {
-    //         Vector2Int position = new Vector2Int(-boardSize.x / 2, -boardSize.y / 2);
-    //         return new RectInt(position, boardSize);
-    //     }
-    // }
+    public RectInt Bounds
+    {
+        get
+        {
+            Vector2Int position = new Vector2Int(-boardSize.x / 2, -boardSize.y / 2);
+            return new RectInt(position, boardSize);
+        }
+    }
 
     private void Awake()
     {
@@ -63,5 +64,29 @@ public class Board : MonoBehaviour
         }
     }
 
-    
+    //The position is only valid if every cell is valid
+    public bool isPositionValid(Piece piece, Vector3Int newPosition)
+    {
+        for (int i = 0; i < piece.cells.Length; i++)
+        {
+            Vector3Int newTilePosition = piece.cells[i] + newPosition;
+
+            Debug.Log("checking isPositionValid: " + piece.cells[i]);
+            Debug.Log("checking isPositionValid new: " + newTilePosition);
+
+            //1. An out of bounds tile is invalid
+            if (!Bounds.Contains((Vector2Int)newTilePosition))
+            {
+                return false;
+            }
+
+            //2. A tile already occupies the position, thus invalid
+            if (tilemap.GetTile(newTilePosition))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
