@@ -7,8 +7,9 @@ public class Piece : MonoBehaviour
   public Vector3Int[] cells { get; private set; }
   public Vector3Int position { get; private set; }
 
+  private int rotationStatus = (int)ROTATION_STATUS.ORIGIN;
   public float stepDelay = 1f;
-  public float lockDelay = 0.05f;
+  public float lockDelay = 0.5f; // Lock Down Timer is 0.5 seconds
   private float stepTime;
   private float lockTime;
   public void Initialize(Board board, Vector3Int position, TetrominoData data)
@@ -34,19 +35,15 @@ public class Piece : MonoBehaviour
   //https://docs.unity3d.com/2019.3/Documentation/Manual/TimeFrameManagement.html
   void Update()
   {
-    //one
-    lockTime += Time.deltaTime;
 
     board.Clear(this);
 
     if (Input.GetKeyDown(KeyCode.LeftArrow))
     {
-      Debug.Log("LeftArrow was pressed.");
       Move(Vector2Int.left);
     }
     if (Input.GetKeyDown(KeyCode.RightArrow))
     {
-      Debug.Log("RightArrow was pressed.");
       Move(Vector2Int.right);
     }
     if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -55,12 +52,26 @@ public class Piece : MonoBehaviour
     }
     if (Input.GetKeyDown(KeyCode.Space))
     {
-      InstantDrop();
+      HardDrop();
+    }
+    if (Input.GetKeyDown(KeyCode.A))
+    {
+      TryToRotate(Data.ROTATE_DIRECTION_VALUE[ROTATE_DIRECTION.LEFT]);
+    }
+    if (Input.GetKeyDown(KeyCode.D))
+    {
+      TryToRotate(Data.ROTATE_DIRECTION_VALUE[ROTATE_DIRECTION.RIGHT]);
     }
 
+    //feature: step
     if (Time.time > this.stepTime)
     {
       this.Step();
+    }
+
+    if (this.lockTime > 0 && Time.time > this.lockTime + this.lockDelay)
+    {
+      this.Lock();
     }
     board.Set(this);
   }
@@ -77,7 +88,6 @@ public class Piece : MonoBehaviour
     if (isNextMoveValid)
     {
       position = newPosition;
-      lockTime = 0f; // reset lock time
       return true;
     }
     return false;
@@ -88,10 +98,11 @@ public class Piece : MonoBehaviour
 
     this.stepTime = Time.time + this.stepDelay;
 
+    //0.5 seconds
     if (!Move(Vector2Int.down))
     {
       Debug.Log("Touch bottom Time:" + Time.time);
-      Lock();
+      this.lockTime = Time.time;
     }
   }
 
@@ -102,13 +113,82 @@ public class Piece : MonoBehaviour
 
     //Init the next piece by using current Piece object
     board.SpawnPiece();
+
+    this.lockTime = 0f; // reset lock time
     //TODO clear lines
   }
 
-  private void InstantDrop()
+  private void HardDrop()
   {
     while (Move(Vector2Int.down)) { }
 
     this.stepTime = 0f;
+  }
+
+
+  private void TryToRotate(int direction)
+  {
+    int originalRotatioStatus = rotationStatus;
+
+    rotationStatus = Util.TetrisUtil.Wrap(rotationStatus - direction, 0, data.cells.GetLength(0));
+    Rotate(direction);
+
+    if (!TestWallKick(direction))
+    {
+      rotationStatus = originalRotatioStatus;
+      Rotate(-direction);
+    }
+  }
+
+  //https://en.wikipedia.org/wiki/Rotation_matrix
+  private void Rotate(int direction)
+  {
+    for (int i = 0; i < cells.Length; i++)
+    {
+      Vector3 current = cells[i];
+
+      int x1, y1;
+      if (data.tetromino == Tetromino.I || data.tetromino == Tetromino.O)
+      {
+        //delta +0.5
+        current.x -= 0.5f;
+        current.y -= 0.5f;
+        x1 = Mathf.CeilToInt(current.x * Data.cos * direction - current.y * Data.sin * direction);
+        y1 = Mathf.CeilToInt(current.x * Data.sin * direction + current.y * Data.cos * direction);
+      }
+      else
+      {
+        x1 = Mathf.RoundToInt(current.x * Data.cos * direction - current.y * Data.sin * direction);
+        y1 = Mathf.RoundToInt(current.x * Data.sin * direction + current.y * Data.cos * direction);
+      }
+      cells[i] = new Vector3Int(x1, y1, 0);
+
+      Debug.Log("Before Rotation:" + current);
+      Debug.Log("After Rotation:" + cells[i]);
+    }
+    //Render Tile Map
+    //board.Set(this);
+  }
+
+  //https://tetris.fandom.com/wiki/SRS
+  private bool TestWallKick(int direction)
+  {
+
+    Debug.Log("TestWallKick Index param: " + rotationStatus + " " + (int)direction + " " + data.wallKicks.GetLength(0));
+    int wallKickIndex = Util.TetrisUtil.GetWallKickIndex(rotationStatus, (int)direction, data.wallKicks.GetLength(0));
+
+
+    Debug.Log("TestWallKick Index: " + wallKickIndex);
+    for (int i = 0; i < data.wallKicks.GetLength(1); i++)
+    {
+      Vector2Int translation = data.wallKicks[wallKickIndex, i];
+
+      if (Move(translation))
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 }

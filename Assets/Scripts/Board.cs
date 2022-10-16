@@ -29,17 +29,42 @@ public class Board : MonoBehaviour
       tetrominoes[i].Initialize();
     }
 
+
     Debug.Log(TetrisUtil.GetProjectName() + "Awake!");
+    Debug.Log(tetrominoes);
   }
 
   private void Start()
   {
+    //DebugSpawnPiece();
     SpawnPiece();
+  }
+
+
+  public void DebugSpawnPiece()
+  {
+    int random = 0;
+
+    TetrominoData data = tetrominoes[random];
+
+    activePiece.Initialize(this, spawnPosition, data);
+    Debug.Log("SpawnPiece:" + Time.time);
+
+    //TODO: Show Gameover Dialog
+    if (IsGameOver())
+    {
+      tilemap.ClearAllTiles();
+    }
+    else
+    {
+      Set(activePiece);
+    }
   }
 
   public void SpawnPiece()
   {
     int random = Random.Range(0, tetrominoes.Length);
+
     TetrominoData data = tetrominoes[random];
 
     activePiece.Initialize(this, spawnPosition, data);
@@ -61,6 +86,8 @@ public class Board : MonoBehaviour
     for (int i = 0; i < piece.cells.Length; i++)
     {
       Vector3Int tilePosition = piece.cells[i] + piece.position;
+      //For debugging rotation
+      // piece.data.tile.color = new Color(0.5f + i / 10f, 0.5f + i / 10f, 0.5f + i / 10f);
       tilemap.SetTile(tilePosition, piece.data.tile);
     }
   }
