@@ -111,11 +111,14 @@ public class Piece : MonoBehaviour
     //Render Tile Map
     board.Set(this);
 
+    //TODO clear lines
+    board.LineClears();
+
     //Init the next piece by using current Piece object
     board.SpawnPiece();
 
     this.lockTime = 0f; // reset lock time
-    //TODO clear lines
+
   }
 
   private void HardDrop()

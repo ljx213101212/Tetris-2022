@@ -131,4 +131,56 @@ public class Board : MonoBehaviour
   {
     return !IsPositionValid(activePiece, spawnPosition);
   }
+
+  public bool IsLineFull(int row)
+  {
+    for (int x = Bounds.xMin; x < Bounds.xMax; x++)
+    {
+      Vector3Int currentCell = new Vector3Int(x, row, 0);
+      if (!tilemap.HasTile(currentCell))
+      {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public void LineClears()
+  {
+    Debug.Log("LineClears : " + tilemap.cellBounds.yMin + " " + tilemap.cellBounds.yMax);
+    Debug.Log("Bounds : " + Bounds.yMin + " " + Bounds.yMax);
+    int row = Bounds.yMin;
+    while (row < Bounds.yMax)
+    {
+      if (IsLineFull(row))
+      {
+        ClearRow(row);
+      }
+      else
+      {
+        row++;
+      }
+    }
+  }
+
+  public void ClearRow(int row)
+  {
+    for (int x = Bounds.xMin; x < Bounds.xMax; x++)
+    {
+      Vector3Int currentCell = new Vector3Int(x, row, 0);
+      tilemap.SetTile(currentCell, null);
+    }
+
+    for (int y = row; y < Bounds.yMax - 1; y++)
+    {
+      for (int x = Bounds.xMin; x < Bounds.xMax; x++)
+      {
+        Vector3Int sourcePosition = new Vector3Int(x, y + 1, 0);
+        Vector3Int targetPosition = new Vector3Int(x, y, 0);
+
+        TileBase sourceTile = tilemap.GetTile(sourcePosition);
+        tilemap.SetTile(targetPosition, sourceTile);
+      }
+    }
+  }
 }
