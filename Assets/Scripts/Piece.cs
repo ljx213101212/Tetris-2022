@@ -13,6 +13,8 @@ public class Piece : MonoBehaviour
   public float lockDelay = 0.5f; // Lock Down Timer is 0.5 seconds
   private float stepTime;
   private float lockTime;
+  private bool hardDroping = false;
+  
   public void Initialize(Board board, Vector3Int position, TetrominoData data)
   {
     this.board = board;
@@ -39,15 +41,15 @@ public class Piece : MonoBehaviour
 
     board.Clear(this);
 
-    if (Input.GetKeyDown(KeyCode.LeftArrow))
+    if (Input.GetKeyDown(KeyCode.LeftArrow) && !hardDroping)
     {
       Move(Vector2Int.left);
     }
-    if (Input.GetKeyDown(KeyCode.RightArrow))
+    if (Input.GetKeyDown(KeyCode.RightArrow) && !hardDroping)
     {
       Move(Vector2Int.right);
     }
-    if (Input.GetKeyDown(KeyCode.DownArrow))
+    if (Input.GetKeyDown(KeyCode.DownArrow) && !hardDroping)
     {
       Move(Vector2Int.down);
     }
@@ -55,11 +57,11 @@ public class Piece : MonoBehaviour
     {
       HardDrop();
     }
-    if (Input.GetKeyDown(KeyCode.A))
+    if (Input.GetKeyDown(KeyCode.A) && !hardDroping)
     {
       TryToRotate(Data.ROTATE_DIRECTION_VALUE[ROTATE_DIRECTION.LEFT]);
     }
-    if (Input.GetKeyDown(KeyCode.D))
+    if (Input.GetKeyDown(KeyCode.D) && !hardDroping)
     {
       TryToRotate(Data.ROTATE_DIRECTION_VALUE[ROTATE_DIRECTION.RIGHT]);
     }
@@ -85,7 +87,6 @@ public class Piece : MonoBehaviour
 
     bool isNextMoveValid = board.IsPositionValid(this, newPosition);
 
-    Debug.Log("Moving: " + isNextMoveValid);
     if (isNextMoveValid)
     {
       position = newPosition;
@@ -119,11 +120,12 @@ public class Piece : MonoBehaviour
     board.SpawnPiece();
 
     this.lockTime = 0f; // reset lock time
-
+    this.hardDroping = false; //reset hardDroping status
   }
 
   public void HardDrop()
   {
+    hardDroping = true;
     while (Move(Vector2Int.down)) { }
 
     this.stepTime = 0f;
