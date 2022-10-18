@@ -62,6 +62,39 @@ public static class Data
   {ROTATE_DIRECTION.RIGHT,  -1}
 };
 
+  public enum ScoreType
+  {
+    SINGLE,
+    DOUBLE,
+    TRIPLE,
+    TETRIS,
+    MINI_TSPIN,
+    MINI_TSPIN_SINGLE,
+    TSPIN,
+    TSPIN_SINGLE,
+    TSPIN_DOUBLE,
+    TSPIN_TRIPLE,
+    SOFT_DROP,
+    HARD_DROP
+  }
+
+
+  public static readonly Dictionary<ScoreType, int> SCORE_MAP = new Dictionary<ScoreType, int>()
+  {
+    {ScoreType.SINGLE, 100},
+    {ScoreType.DOUBLE, 300},
+    {ScoreType.TRIPLE, 500},
+    {ScoreType.TETRIS, 800},
+    {ScoreType.MINI_TSPIN, 100},
+    {ScoreType.MINI_TSPIN_SINGLE, 200},
+    {ScoreType.TSPIN, 400},
+    {ScoreType.TSPIN_SINGLE, 800},
+    {ScoreType.TSPIN_DOUBLE, 1200},
+    {ScoreType.TSPIN_TRIPLE, 1600},
+    {ScoreType.SOFT_DROP, 1},
+    {ScoreType.HARD_DROP, 2},
+  };
+
 }
 
 public enum ROTATION_STATUS

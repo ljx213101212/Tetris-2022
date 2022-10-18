@@ -14,7 +14,7 @@ public class Piece : MonoBehaviour
   private float stepTime;
   private float lockTime;
   private bool hardDroping = false;
-  
+
   public void Initialize(Board board, Vector3Int position, TetrominoData data)
   {
     this.board = board;
@@ -113,11 +113,14 @@ public class Piece : MonoBehaviour
     //Render Tile Map
     board.Set(this);
 
-    //TODO clear lines
+    //Feature: clear lines
     board.LineClears();
 
     //Init the next piece by using current Piece object
     board.SpawnPiece();
+
+    //calculate points
+    ScoreManager.instance.CalculatePoint(Data.ScoreType.SINGLE, 1, 0);
 
     this.lockTime = 0f; // reset lock time
     this.hardDroping = false; //reset hardDroping status
