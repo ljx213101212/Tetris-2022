@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Piece : MonoBehaviour
 {
@@ -121,7 +122,7 @@ public class Piece : MonoBehaviour
 
   }
 
-  private void HardDrop()
+  public void HardDrop()
   {
     while (Move(Vector2Int.down)) { }
 
@@ -193,5 +194,16 @@ public class Piece : MonoBehaviour
     }
 
     return false;
+  }
+
+  public List<Vector3Int> GetCurrentCellPositions(Vector3Int position)
+  {
+    List<Vector3Int> positions = new List<Vector3Int>();
+    for (int i = 0; i < this.cells.Length; i++)
+    {
+      Vector3Int currentCellPosition = this.cells[i] + position;
+      positions.Add(currentCellPosition);
+    }
+    return positions;
   }
 }

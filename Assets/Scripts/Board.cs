@@ -101,16 +101,26 @@ public class Board : MonoBehaviour
     }
   }
 
+  public bool IsOutOfBound(Piece piece, Vector3Int newPosition)
+  {
+    for (int i = 0; i < piece.cells.Length; i++)
+    {
+      Vector3Int newTilePosition = piece.cells[i] + newPosition;
+      //1. An out of bounds tile is invalid
+      if (!Bounds.Contains((Vector2Int)newTilePosition))
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
   //The position is only valid if every cell is valid
   public bool IsPositionValid(Piece piece, Vector3Int newPosition)
   {
     for (int i = 0; i < piece.cells.Length; i++)
     {
       Vector3Int newTilePosition = piece.cells[i] + newPosition;
-
-      Debug.Log("checking isPositionValid: " + piece.cells[i]);
-      Debug.Log("checking isPositionValid new: " + newTilePosition);
-
       //1. An out of bounds tile is invalid
       if (!Bounds.Contains((Vector2Int)newTilePosition))
       {

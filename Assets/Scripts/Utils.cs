@@ -1,5 +1,6 @@
 using UnityEngine;
-
+using System.Collections.Generic;
+using System.Linq;
 namespace Util
 {
   public class TetrisUtil
@@ -34,6 +35,11 @@ namespace Util
       {
         return min + (input - min) % (max - min);
       }
+    }
+
+    public static bool IsOverlapping(List<Vector3Int> position1, List<Vector3Int> position2)
+    {
+      return position1.Any(p1 => position2.Any(p2 => p1.x == p2.x && p1.y == p2.y));
     }
   }
 }
