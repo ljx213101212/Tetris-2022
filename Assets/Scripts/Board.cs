@@ -28,10 +28,6 @@ public class Board : MonoBehaviour
     {
       tetrominoes[i].Initialize();
     }
-
-
-    Debug.Log(TetrisUtil.GetProjectName() + "Awake!");
-    Debug.Log(tetrominoes);
   }
 
   private void Start()
@@ -48,7 +44,6 @@ public class Board : MonoBehaviour
     TetrominoData data = tetrominoes[random];
 
     activePiece.Initialize(this, spawnPosition, data);
-    Debug.Log("SpawnPiece:" + Time.time);
 
     //TODO: Show Gameover Dialog
     if (IsGameOver())
@@ -68,7 +63,6 @@ public class Board : MonoBehaviour
     TetrominoData data = tetrominoes[random];
 
     activePiece.Initialize(this, spawnPosition, data);
-    Debug.Log("SpawnPiece:" + Time.time);
 
     //TODO: Show Gameover Dialog
     if (IsGameOver())
@@ -155,22 +149,23 @@ public class Board : MonoBehaviour
     return true;
   }
 
-  public void LineClears()
+  public int LineClears()
   {
-    Debug.Log("LineClears : " + tilemap.cellBounds.yMin + " " + tilemap.cellBounds.yMax);
-    Debug.Log("Bounds : " + Bounds.yMin + " " + Bounds.yMax);
+    int clearedLines = 0;
     int row = Bounds.yMin;
     while (row < Bounds.yMax)
     {
       if (IsLineFull(row))
       {
         ClearRow(row);
+        clearedLines += 1;
       }
       else
       {
         row++;
       }
     }
+    return clearedLines;
   }
 
   public void ClearRow(int row)

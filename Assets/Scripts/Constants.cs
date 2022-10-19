@@ -22,6 +22,15 @@ public static class Data
         { Tetromino.Z, new Vector2Int[] { new Vector2Int(-1, 1), new Vector2Int( 0, 1), new Vector2Int( 0, 0), new Vector2Int( 1, 0) } },
     };
 
+  //Related to Tetromino.T North
+  public static readonly Vector2Int[] TSpinCells = new Vector2Int[4]
+  {
+    new Vector2Int(Cells[Tetromino.T][1].x, Cells[Tetromino.T][1].y + 1),
+    new Vector2Int(Cells[Tetromino.T][3].x, Cells[Tetromino.T][3].y - 1),
+    new Vector2Int(Cells[Tetromino.T][1].x, Cells[Tetromino.T][1].y + 1),
+    new Vector2Int(Cells[Tetromino.T][3].x, Cells[Tetromino.T][3].y - 1)
+  };
+
   //https://tetris.fandom.com/wiki/SRS
   private static readonly Vector2Int[,] WallKicksI = new Vector2Int[,] {
         { new Vector2Int(0, 0), new Vector2Int(-2, 0), new Vector2Int( 1, 0), new Vector2Int(-2,-1), new Vector2Int( 1, 2) },
@@ -62,6 +71,46 @@ public static class Data
   {ROTATE_DIRECTION.RIGHT,  -1}
 };
 
+
+
+
+  public static readonly Dictionary<ScoreType, int> SCORE_MAP = new Dictionary<ScoreType, int>()
+  {
+    {ScoreType.SINGLE, 100},
+    {ScoreType.DOUBLE, 300},
+    {ScoreType.TRIPLE, 500},
+    {ScoreType.TETRIS, 800},
+    {ScoreType.MINI_TSPIN, 100},
+    {ScoreType.MINI_TSPIN_SINGLE, 200},
+    {ScoreType.TSPIN, 400},
+    {ScoreType.TSPIN_SINGLE, 800},
+    {ScoreType.TSPIN_DOUBLE, 1200},
+    {ScoreType.TSPIN_TRIPLE, 1600},
+    {ScoreType.SOFT_DROP, 1},
+    {ScoreType.HARD_DROP, 2},
+  };
+
+}
+
+public enum ScoreType
+{
+  SINGLE,
+  DOUBLE,
+  TRIPLE,
+  TETRIS,
+  MINI_TSPIN,
+  MINI_TSPIN_SINGLE,
+  TSPIN,
+  TSPIN_SINGLE,
+  TSPIN_DOUBLE,
+  TSPIN_TRIPLE,
+  SOFT_DROP,
+  HARD_DROP
+}
+
+public enum TSPinCell
+{
+  A, B, C, D
 }
 
 public enum ROTATION_STATUS
@@ -75,4 +124,14 @@ public enum ROTATION_STATUS
 public enum ROTATE_DIRECTION
 {
   LEFT, RIGHT
+}
+
+public enum SUPER_ROTATION_POINT
+{
+  POINT_0 = 0, //Invalid Point
+  POINT_1 = 1,
+  POINT_2 = 2,
+  POINT_3 = 3,
+  POINT_4 = 4,
+  POINT_5 = 5
 }

@@ -46,7 +46,6 @@ public class Ghost : MonoBehaviour
 
     if (isNextMoveValid)
     {
-      Debug.Log("GhostMove: " + isNextMoveValid);
       this.position = newPosition;
       return true;
     }
