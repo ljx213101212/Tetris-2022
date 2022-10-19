@@ -41,5 +41,10 @@ namespace Util
     {
       return position1.Any(p1 => position2.Any(p2 => p1.x == p2.x && p1.y == p2.y));
     }
+
+    public static SUPER_ROTATION_POINT GetSuperRotationNumberByWallKickTest(int wallKickTest)
+    {
+      return (SUPER_ROTATION_POINT)(wallKickTest + 1);
+    }
   }
 }

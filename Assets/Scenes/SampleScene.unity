@@ -175,7 +175,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 323481099}
-  highscoreText: {fileID: 0}
 --- !u!114 &323481099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,8 +249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca5d72ae2c08bf4a8e9a333a20ab815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreText: {fileID: 0}
-  highscoreText: {fileID: 0}
+  scoreText: {fileID: 323481099}
 --- !u!114 &324539928
 MonoBehaviour:
   m_ObjectHideFlags: 0
