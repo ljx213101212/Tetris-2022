@@ -1,12 +1,20 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using Util;
+using UnityEngine.Events;
+using System.Collections.Generic;
 
 public class Board : MonoBehaviour
 {
   public Tilemap tilemap { get; private set; }
   public Piece activePiece { get; private set; }
   public TetrominoData[] tetrominoes;
+
+  public List<TetrominoData> tetrominoQueue = new List<TetrominoData>();
+
+  public int tetrominoQueueLength = 4;
+
+  public UnityEvent spawnPieceEvent;
+
   public Vector2Int boardSize = new Vector2Int(10, 20);
   public Vector3Int spawnPosition = new Vector3Int(-1, 8, 0);
 
@@ -23,6 +31,7 @@ public class Board : MonoBehaviour
   {
     tilemap = GetComponentInChildren<Tilemap>();
     activePiece = GetComponentInChildren<Piece>();
+    spawnPieceEvent = new UnityEvent();
 
     for (int i = 0; i < tetrominoes.Length; i++)
     {
@@ -32,35 +41,27 @@ public class Board : MonoBehaviour
 
   private void Start()
   {
-    //DebugSpawnPiece();
+    InitializeTetrominoQueue();
     SpawnPiece();
   }
 
 
-  public void DebugSpawnPiece()
+  private void InitializeTetrominoQueue()
   {
-    int random = 0;
 
-    TetrominoData data = tetrominoes[random];
-
-    activePiece.Initialize(this, spawnPosition, data);
-
-    //TODO: Show Gameover Dialog
-    if (IsGameOver())
+    for (int i = 0; i < tetrominoQueueLength; i++)
     {
-      tilemap.ClearAllTiles();
-    }
-    else
-    {
-      Set(activePiece);
+      this.tetrominoQueue.Add(Util.TetrisUtil.GetRandomTetromino(tetrominoes));
     }
   }
 
   public void SpawnPiece()
   {
-    int random = Random.Range(0, tetrominoes.Length);
 
-    TetrominoData data = tetrominoes[random];
+    TetrominoData data = this.tetrominoQueue[0];
+    this.tetrominoQueue.RemoveAt(0);
+    this.tetrominoQueue.Add(Util.TetrisUtil.GetRandomTetromino(tetrominoes));
+    spawnPieceEvent.Invoke();
 
     activePiece.Initialize(this, spawnPosition, data);
 

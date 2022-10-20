@@ -24,7 +24,7 @@ public class ScoreManager : MonoBehaviour
   public void CalculatePoint(ScoreType type, int level, int softDropLines, int hardDropLines, bool isBackToBackBonus)
   {
 
-    Debug.Log($"CalculatePoint: type: {type} , level: {level} , softDropLines: {softDropLines}, hardDropLines: {hardDropLines}, isBackToBackBonus: {isBackToBackBonus}");
+    // Debug.Log($"CalculatePoint: type: {type} , level: {level} , softDropLines: {softDropLines}, hardDropLines: {hardDropLines}, isBackToBackBonus: {isBackToBackBonus}");
 
     int points = Data.SCORE_MAP[ScoreType.SOFT_DROP] * softDropLines + Data.SCORE_MAP[ScoreType.HARD_DROP] * hardDropLines;
     if (type != ScoreType.SOFT_DROP && type != ScoreType.HARD_DROP)
@@ -36,7 +36,7 @@ public class ScoreManager : MonoBehaviour
       points += Mathf.RoundToInt(Data.SCORE_MAP[type] / 2);
     }
 
-    Debug.Log($"CalculatePoint: {points}");
+    // Debug.Log($"CalculatePoint: {points}");
     AddPoint(points);
   }
 
