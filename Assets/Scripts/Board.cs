@@ -15,6 +15,8 @@ public class Board : MonoBehaviour
 
   public UnityEvent spawnPieceEvent;
 
+  public SoundEffectsPlayer soundPlayer;
+
   public Vector2Int boardSize = new Vector2Int(10, 20);
   public Vector3Int spawnPosition = new Vector3Int(-1, 8, 0);
 
@@ -32,6 +34,7 @@ public class Board : MonoBehaviour
     tilemap = GetComponentInChildren<Tilemap>();
     activePiece = GetComponentInChildren<Piece>();
     spawnPieceEvent = new UnityEvent();
+    soundPlayer = GetComponentInChildren<SoundEffectsPlayer>();
 
     for (int i = 0; i < tetrominoes.Length; i++)
     {

@@ -167,6 +167,9 @@ public class Piece : MonoBehaviour
     }
 
     this.stepTime = 0f;
+
+    Debug.Log("this.board.soundPlayer", this.board.soundPlayer);
+    this.board.soundPlayer.PlayHardDropAudio();
   }
 
 
