@@ -46,5 +46,13 @@ namespace Util
     {
       return (SUPER_ROTATION_POINT)(wallKickTest + 1);
     }
+
+
+    public static TetrominoData GetRandomTetromino(TetrominoData[] tetrominoes)
+    {
+      int random = Random.Range(0, tetrominoes.Length);
+      return tetrominoes[random];
+    }
   }
+
 }
