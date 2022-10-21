@@ -68,11 +68,19 @@ public class Piece : MonoBehaviour
 
     if (Input.GetKeyDown(KeyCode.LeftArrow) && !hardDroping)
     {
-      Move(Vector2Int.left);
+      if (Move(Vector2Int.left))
+      {
+        this.board.soundPlayer.PlayMoveAudio();
+      }
     }
     if (Input.GetKeyDown(KeyCode.RightArrow) && !hardDroping)
     {
-      Move(Vector2Int.right);
+      if (Move(Vector2Int.right))
+      {
+        {
+          this.board.soundPlayer.PlayMoveAudio();
+        }
+      }
     }
     if (Input.GetKeyDown(KeyCode.DownArrow) && !hardDroping)
     {
@@ -141,6 +149,10 @@ public class Piece : MonoBehaviour
 
     //Feature: clear lines
     int clearedLines = board.LineClears();
+    if (clearedLines > 0)
+    {
+      this.board.soundPlayer.PlayLineClearAudio();
+    }
 
     //Feature: calculate points (before spawn piece)
     ScoreType type = GetScoreType(clearedLines, this.tSpinCells);
@@ -199,6 +211,7 @@ public class Piece : MonoBehaviour
       {
         this.hasRotation5 = true;
       }
+      this.board.soundPlayer.PlayRotationAudio();
     }
   }
 

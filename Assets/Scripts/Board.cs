@@ -71,6 +71,7 @@ public class Board : MonoBehaviour
     //TODO: Show Gameover Dialog
     if (IsGameOver())
     {
+      this.soundPlayer.PlayGameOverAudio();
       tilemap.ClearAllTiles();
     }
     else
