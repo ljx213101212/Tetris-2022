@@ -11,7 +11,7 @@ public class Piece : MonoBehaviour
   public Vector3Int position { get; private set; }
 
   private int rotationStatus = (int)ROTATION_STATUS.ORIGIN;
-  public float stepDelay = 1f;
+  public float stepDelay = Data.IdleStepTime;
   public float lockDelay = 0.5f; // Lock Down Timer is 0.5 seconds
   private float stepTime;
   private float lockTime;
@@ -77,15 +77,23 @@ public class Piece : MonoBehaviour
     {
       if (Move(Vector2Int.right))
       {
-        {
-          this.board.soundPlayer.PlayMoveAudio();
-        }
+        this.board.soundPlayer.PlayMoveAudio();
       }
     }
+    if (Input.GetKey(KeyCode.DownArrow))
+    {
+      stepDelay = Data.DownPressedStepTime;
+    }
+    else
+    {
+      stepDelay = Data.IdleStepTime;
+    }
+
     if (Input.GetKeyDown(KeyCode.DownArrow) && !hardDroping)
     {
-      Move(Vector2Int.down);
+      this.Step();
     }
+
     if (Input.GetKeyDown(KeyCode.Space))
     {
       HardDrop();
@@ -161,6 +169,8 @@ public class Piece : MonoBehaviour
     updateBackToBack(isBackToBackBonus, isBackToBackBreak);
     ScoreManager.instance.CalculatePoint(type, 1, this.dropLines - this.hardDropLines, this.hardDropLines, isBackToBackBonus && this.backToBack == 2);
 
+    //Play Audio: Lock
+    this.board.soundPlayer.PlayLockAudio();
     //Init the next piece by using current Piece object
     board.SpawnPiece();
 

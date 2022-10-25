@@ -160,6 +160,7 @@ MonoBehaviour:
   sfx_move: {fileID: 0}
   sfx_rotation: {fileID: 0}
   sfx_gameover: {fileID: 0}
+  sfx_lock: {fileID: 0}
 --- !u!82 &224881976
 AudioSource:
   m_ObjectHideFlags: 0
@@ -751,6 +752,7 @@ MonoBehaviour:
   sfx_move: {fileID: 0}
   sfx_rotation: {fileID: 0}
   sfx_gameover: {fileID: 0}
+  sfx_lock: {fileID: 0}
 --- !u!4 &667080780
 Transform:
   m_ObjectHideFlags: 0
@@ -1765,7 +1767,8 @@ MonoBehaviour:
   sfx_line_clear: {fileID: 8300000, guid: e273d9d41d349ee488a2a0a31b5eba96, type: 3}
   sfx_move: {fileID: 8300000, guid: 2b46d4f4177e72b449d06346ebf4ff13, type: 3}
   sfx_rotation: {fileID: 8300000, guid: a30e7e2cf7ecb7442a3203adfaee20fa, type: 3}
-  sfx_gameover: {fileID: 8300000, guid: e335fdf241f5fd44f9b29d43a5b7aaad, type: 3}
+  sfx_gameover: {fileID: 8300000, guid: 4033b31c13596e54da69f25c2e610c3c, type: 3}
+  sfx_lock: {fileID: 8300000, guid: 78a42a3b564514f4a8af58bdf243dcb7, type: 3}
 --- !u!1 &1792216596
 GameObject:
   m_ObjectHideFlags: 0

@@ -90,6 +90,9 @@ public static class Data
     {ScoreType.HARD_DROP, 2},
   };
 
+  public static readonly float IdleStepTime = 1f;
+
+  public static readonly float DownPressedStepTime = 0.05f;
 }
 
 public enum ScoreType

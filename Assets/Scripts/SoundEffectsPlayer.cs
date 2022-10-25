@@ -7,7 +7,7 @@ public class SoundEffectsPlayer : MonoBehaviour
   public AudioSource Piece;
 
   public AudioSource Environment;
-  public AudioClip sfx_hard_drop, sfx_line_clear, sfx_move, sfx_rotation, sfx_gameover;
+  public AudioClip sfx_hard_drop, sfx_line_clear, sfx_move, sfx_rotation, sfx_gameover, sfx_lock;
 
 
   public void PlayHardDropAudio()
@@ -48,5 +48,11 @@ public class SoundEffectsPlayer : MonoBehaviour
     Environment.Play();
 
     Debug.Log("PlayGameOverAudio");
+  }
+
+  public void PlayLockAudio()
+  {
+    Environment.clip = sfx_lock;
+    Environment.Play();
   }
 }
