@@ -53,6 +53,16 @@ namespace Util
       int random = Random.Range(0, tetrominoes.Length);
       return tetrominoes[random];
     }
+
+    public static float GetPlayerPrefVolume()
+    {
+      float volumeValue = PlayerPrefs.GetFloat("VolumeValue");
+      if (!PlayerPrefs.HasKey("VolumeValue"))
+      {
+        volumeValue = Data.DefaultVolume;
+      }
+      return volumeValue;
+    }
   }
 
 }

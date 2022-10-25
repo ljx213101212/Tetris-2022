@@ -18,6 +18,7 @@ public class VolumeManager : MonoBehaviour
 
   public void SaveVolumeButton()
   {
+    Debug.Log("SaveVolumeButton " + volumeSlider.value.ToString());
     float volumeVolume = volumeSlider.value;
     PlayerPrefs.SetFloat("VolumeValue", volumeVolume);
     LoadValues();
@@ -25,7 +26,8 @@ public class VolumeManager : MonoBehaviour
 
   public void LoadValues()
   {
-    float volumeValue = PlayerPrefs.GetFloat("VolumeValue");
+    float volumeValue = Util.TetrisUtil.GetPlayerPrefVolume();
+    Debug.Log("LoadValues " + volumeValue.ToString());
     volumeSlider.value = volumeValue;
     VolumeSlider(volumeValue);
     AudioListener.volume = volumeValue;

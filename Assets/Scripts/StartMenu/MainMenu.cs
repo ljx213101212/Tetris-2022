@@ -6,6 +6,11 @@ using Util;
 
 public class MainMenu : MonoBehaviour
 {
+
+  private void Awake()
+  {
+    AudioListener.volume = Util.TetrisUtil.GetPlayerPrefVolume();
+  }
   public void PlayGame()
   {
     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
