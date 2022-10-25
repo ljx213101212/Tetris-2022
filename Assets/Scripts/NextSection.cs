@@ -13,7 +13,7 @@ public class NextSection : MonoBehaviour
   public static Vector3Int nextPosition1 = new Vector3Int(-1, 5, 0);
   public static Vector3Int nextPosition2 = new Vector3Int(-1, 1, 0);
   public static Vector3Int nextPosition3 = new Vector3Int(-1, -3, 0);
-  public static Vector3Int nextPosition4 = new Vector3Int(-1, -7, 0);
+  public static Vector3Int nextPosition4 = new Vector3Int(-1, -6, 0);
 
   public Vector3Int[] nextPositions = new Vector3Int[] { nextPosition1, nextPosition2, nextPosition3, nextPosition4 };
   public RectInt Bounds
@@ -34,14 +34,8 @@ public class NextSection : MonoBehaviour
   void Start()
   {
     mainBoard.spawnPieceEvent.AddListener(UpdateNextSection);
-    Set(mainBoard.tetrominoQueue[0], nextPositions[0]);
   }
 
-
-  void LateUpdate()
-  {
-
-  }
   void UpdateNextSection()
   {
     tilemap.ClearAllTiles();

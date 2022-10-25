@@ -8,7 +8,6 @@ public class ScoreManager : MonoBehaviour
   //   public Text highscoreText;
 
   int score = 0;
-  int highscore = 0;
 
   private void Awake()
   {
