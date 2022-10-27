@@ -66,6 +66,29 @@ public class Piece : MonoBehaviour
 
     board.Clear(this);
 
+    // {
+    //   TryToRotate(Data.ROTATE_DIRECTION_VALUE[ROTATE_DIRECTION.RIGHT]);
+    // }
+    if (!PauseMenu.GameIsPaused)
+    {
+      UpdateOnKeyPress();
+    }
+
+    //feature: step
+    if (Time.time > this.stepTime)
+    {
+      this.Step();
+    }
+
+    if (this.lockTime > 0 && Time.time > this.lockTime + this.lockDelay)
+    {
+      this.Lock();
+    }
+    board.Set(this);
+  }
+
+  void UpdateOnKeyPress()
+  {
     if (Input.GetKeyDown(KeyCode.LeftArrow) && !hardDroping)
     {
       if (Move(Vector2Int.left))
@@ -106,18 +129,6 @@ public class Piece : MonoBehaviour
     {
       TryToRotate(Data.ROTATE_DIRECTION_VALUE[ROTATE_DIRECTION.RIGHT]);
     }
-
-    //feature: step
-    if (Time.time > this.stepTime)
-    {
-      this.Step();
-    }
-
-    if (this.lockTime > 0 && Time.time > this.lockTime + this.lockDelay)
-    {
-      this.Lock();
-    }
-    board.Set(this);
   }
 
   public bool Move(Vector2Int translation)
