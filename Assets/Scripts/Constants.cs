@@ -93,6 +93,8 @@ public static class Data
   public static readonly float IdleStepTime = 1f;
 
   public static readonly float DownPressedStepTime = 0.05f;
+
+  public static readonly float DefaultVolume = 0.6f;
 }
 
 public enum ScoreType

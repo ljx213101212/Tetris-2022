@@ -20,6 +20,8 @@ public class Board : MonoBehaviour
   public Vector2Int boardSize = new Vector2Int(10, 20);
   public Vector3Int spawnPosition = new Vector3Int(-1, 8, 0);
 
+  bool m_Play;
+
   public RectInt Bounds
   {
     get
@@ -35,7 +37,6 @@ public class Board : MonoBehaviour
     activePiece = GetComponentInChildren<Piece>();
     spawnPieceEvent = new UnityEvent();
     soundPlayer = GetComponentInChildren<SoundEffectsPlayer>();
-
     for (int i = 0; i < tetrominoes.Length; i++)
     {
       tetrominoes[i].Initialize();
@@ -44,8 +45,25 @@ public class Board : MonoBehaviour
 
   private void Start()
   {
+    m_Play = false;
     InitializeTetrominoQueue();
     SpawnPiece();
+  }
+
+  void Update()
+  {
+    if (!PauseMenu.GameIsPaused && !m_Play)
+    {
+      soundPlayer.PlayBGM();
+      m_Play = true;
+    }
+
+    if (PauseMenu.GameIsPaused && m_Play)
+    {
+      Debug.Log("shoud pause bgm");
+      soundPlayer.PauseBGM();
+      m_Play = false;
+    }
   }
 
 

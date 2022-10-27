@@ -4,12 +4,24 @@ using UnityEngine;
 
 public class SoundEffectsPlayer : MonoBehaviour
 {
+
+  public AudioSource BGM;
   public AudioSource Piece;
 
   public AudioSource Environment;
   public AudioClip sfx_hard_drop, sfx_line_clear, sfx_move, sfx_rotation, sfx_gameover, sfx_lock;
 
 
+
+  public void PlayBGM()
+  {
+    BGM.Play();
+  }
+
+  public void PauseBGM()
+  {
+    BGM.Pause();
+  }
   public void PlayHardDropAudio()
   {
     Piece.clip = sfx_hard_drop;
